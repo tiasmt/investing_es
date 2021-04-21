@@ -5,11 +5,11 @@ public class SharesBought : IEvent
     public string EventType {get;} = "SharesBought";
     public string Stock {get;}
     public string User { get; }
-    public int Price { get; }
+    public double Price { get; }
     public int Amount { get; }
     public DateTime DateTime { get; }
 
-    public SharesBought(string user, string stock ,int amount, int price, DateTime dateTime)
+    public SharesBought(string user, string stock ,int amount, double price, DateTime dateTime)
     {
         User = user;
         Stock = stock;

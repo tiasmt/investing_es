@@ -44,10 +44,11 @@ public class Portfolio
         private void Apply(SharesSold evnt)
         {
             _portfolioState.Money += (evnt.Amount * evnt.Price);
-            if(_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, int>(); 
+            var share = new ShareTicker(evnt.Amount, evnt.Price);
+            if(_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, ShareTicker>(); 
             if(_portfolioState.Shares.ContainsKey(evnt.Stock))
             {
-                _portfolioState.Shares[evnt.Stock] -= evnt.Amount;
+                _portfolioState.Shares[evnt.Stock].NumberOfShares -= evnt.Amount;
             } 
             else
             {
@@ -57,15 +58,16 @@ public class Portfolio
         private void Apply(SharesBought evnt)
         {
             _portfolioState.Money -= (evnt.Amount * evnt.Price);
-            
-            if(_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, int>(); 
+            var share = new ShareTicker(evnt.Amount, evnt.Price);
+            if(_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, ShareTicker>(); 
             if(_portfolioState.Shares.ContainsKey(evnt.Stock))
             {
-                _portfolioState.Shares[evnt.Stock] += evnt.Amount;
+                _portfolioState.Shares[evnt.Stock].Price = ((_portfolioState.Shares[evnt.Stock].NumberOfShares * _portfolioState.Shares[evnt.Stock].Price) + (evnt.Amount * evnt.Price)) / (_portfolioState.Shares[evnt.Stock].NumberOfShares + evnt.Amount);
+                _portfolioState.Shares[evnt.Stock].NumberOfShares += evnt.Amount;
             } 
             else
             {
-                _portfolioState.Shares.Add(evnt.Stock, evnt.Amount);
+                _portfolioState.Shares.Add(evnt.Stock, share);
             }
 
         }

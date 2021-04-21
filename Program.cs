@@ -51,7 +51,7 @@ namespace investing_es
                         {
                             foreach(var stockOwned in portfolio.GetState().Shares)
                             {
-                                System.Console.WriteLine($"{username} Stock Ticker: {stockOwned.Key} Quantity: {stockOwned.Value}");
+                                System.Console.WriteLine($"{username} Stock Ticker: {stockOwned.Key} Quantity: {stockOwned.Value.NumberOfShares} Average Price: {stockOwned.Value.Price} ");
                             }
                         }
                         break;
