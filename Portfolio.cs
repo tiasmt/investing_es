@@ -32,11 +32,11 @@ public class Portfolio
             ApplyEvent(new WithdrawalMade(Username, quantity, DateTime.UtcNow));
         }
 
-        public void BuyShares(string stock, int quantity, int price)
+        public void BuyShares(string stock, int quantity, double price)
         {
             ApplyEvent(new SharesBought(Username, stock, quantity, price, DateTime.UtcNow));
         }
-        public void SellShares(string stock, int quantity, int price)
+        public void SellShares(string stock, int quantity, double price)
         {
             ApplyEvent(new SharesSold(Username, stock, quantity, price, DateTime.UtcNow));
         }
@@ -49,6 +49,7 @@ public class Portfolio
             if(_portfolioState.Shares.ContainsKey(evnt.Stock))
             {
                 _portfolioState.Shares[evnt.Stock].NumberOfShares -= evnt.Amount;
+                _portfolioState.Profit = (evnt.Price - _portfolioState.Shares[evnt.Stock].Price) * evnt.Amount;
             } 
             else
             {

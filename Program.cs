@@ -51,7 +51,7 @@ namespace investing_es
                         {
                             foreach(var stockOwned in portfolio.GetState().Shares)
                             {
-                                System.Console.WriteLine($"{username} Stock Ticker: {stockOwned.Key} Quantity: {stockOwned.Value.NumberOfShares} Average Price: {stockOwned.Value.Price} ");
+                                System.Console.WriteLine($"{username} Stock Ticker: {stockOwned.Key} Quantity: {stockOwned.Value.NumberOfShares} Average Price: {stockOwned.Value.Price} Profit: {portfolio.GetState().Profit}");
                             }
                         }
                         break;
@@ -111,10 +111,10 @@ namespace investing_es
             return Console.ReadLine()?.ToUpperInvariant();
         }
 
-        private static int GetPrice()
+        private static double GetPrice()
         {
             System.Console.WriteLine("Price: ");
-            return int.Parse(Console.ReadLine()?.ToUpperInvariant());
+            return double.Parse(Console.ReadLine()?.ToUpperInvariant());
         }
     }
 }
