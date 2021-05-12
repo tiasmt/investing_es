@@ -26,7 +26,7 @@ namespace investing_es
                 PrintMenuItem("Sell Stock", ConsoleColor.DarkGreen);
                 PrintMenuItem("Portfolio", ConsoleColor.DarkYellow);
                 PrintMenuItem("Events", ConsoleColor.Yellow);
-                System.Console.WriteLine(">  ");
+                System.Console.Write(">  ");
                 key = Console.ReadLine()?.ToUpperInvariant();
                 System.Console.WriteLine();
 
@@ -93,6 +93,7 @@ namespace investing_es
                         break;
                 }
                 await portfolioRepository.Save(portfolio);
+                System.Console.WriteLine();
                 System.Console.WriteLine();
             }
         }
