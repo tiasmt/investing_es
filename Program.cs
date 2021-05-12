@@ -47,9 +47,9 @@ namespace investing_es
                         break;
                     case "P":
                         System.Console.WriteLine($"Money: {portfolio.GetState().Money:0.##}");
-                        if(portfolio.GetState().Shares != null) 
+                        if (portfolio.GetState().Shares != null)
                         {
-                            foreach(var stockOwned in portfolio.GetState().Shares)
+                            foreach (var stockOwned in portfolio.GetState().Shares)
                             {
                                 System.Console.WriteLine($"Stock Ticker: {stockOwned.Key} Quantity: {stockOwned.Value.NumberOfShares} Average Price: {stockOwned.Value.Price:0.##} Profit: {portfolio.GetState().Profit:0.##}");
                             }
@@ -70,23 +70,26 @@ namespace investing_es
                         System.Console.WriteLine($"{username} Sold: {stock} Amount: {amountOfSharesToSell} Price: {price:0.##}");
                         break;
                     case "E":
-                    //todo - fix how events are retrieved
-                        /*Console.WriteLine($"Events: {username}");
-                        foreach (var evnt in portfolio.GetEvents())
+                        var events = await portfolioRepository.GetAllEvents(username);
+                        Console.WriteLine($"Events: {username}");
+                        foreach (var evnt in events)
                         {
                             switch (evnt)
                             {
-                                case ProductShipped shipProduct:
-                                    System.Console.WriteLine($"{shipProduct.DateTime:u} {sku} Shipped: {shipProduct.Quantity}");
+                                case SharesSold sharesSold:
+                                    System.Console.WriteLine($"[{sharesSold.DateTime}] {sharesSold.Amount} shares SOLD from {sharesSold.Stock} at Price {sharesSold.Price:0.##}");
                                     break;
-                                case ProductReceived receiveProduct:
-                                    System.Console.WriteLine($"{receiveProduct.DateTime:u} {sku} Received: {receiveProduct.Quantity}");
+                                case SharesBought sharesBought:
+                                    System.Console.WriteLine($"[{sharesBought.DateTime}] {sharesBought.Amount} shares BOUGHT from {sharesBought.Stock} at Price {sharesBought.Price:0.##}");
                                     break;
-                                case InventoryAdjusted inventoryAdjusted:
-                                    System.Console.WriteLine($"{inventoryAdjusted.DateTime:u} {sku} Adjused: {inventoryAdjusted.Quantity} Reason: {inventoryAdjusted.Reason}");
+                                case DepositMade depositMade:
+                                    System.Console.WriteLine($"[{depositMade.DateTime}] {depositMade.Amount} EUR DEPOSIT");
+                                    break;
+                                case WithdrawalMade withdrawalMade:
+                                    System.Console.WriteLine($"[{withdrawalMade.DateTime}] {withdrawalMade.Amount} EUR WITHDRAWAL");
                                     break;
                             }
-                        }*/
+                        }
                         break;
                 }
                 await portfolioRepository.Save(portfolio);

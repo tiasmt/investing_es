@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -121,6 +122,35 @@ namespace investing_es
                 }
             } while (!currentSlice.IsEndOfStream);
             return portfolio;
+        }
+
+        public async Task<List<IEvent>> GetAllEvents(string username)
+        {
+            var streamName = GetStreamName(username);
+            var snapshot = new Snapshot();
+            var portfolio = new Portfolio(username, snapshot.State);
+            var events = new List<IEvent>();
+
+            StreamEventsSlice currentSlice;
+            var nextSliceStart = snapshot.Version + 1;
+            do
+            {
+                currentSlice = await _connection.ReadStreamEventsForwardAsync(
+                    streamName,
+                    nextSliceStart,
+                    200,
+                    false
+                );
+
+                nextSliceStart = currentSlice.NextEventNumber;
+
+                foreach (var evnt in currentSlice.Events)
+                {
+                    var evntObj = DeserializeEvent(evnt);
+                    events.Add(evntObj);
+                }
+            } while (!currentSlice.IsEndOfStream);
+            return events;
         }
 
         private async Task<Snapshot> GetSnapshot(string sku)

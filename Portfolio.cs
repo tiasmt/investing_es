@@ -88,7 +88,6 @@ public class Portfolio
 
         public IList<IEvent> GetUncommittedEvents()
         {
-            //todo
             var uncommittedEvents = _uncommittedevents.ToArray();
             _uncommittedevents.Clear();
             return uncommittedEvents;
