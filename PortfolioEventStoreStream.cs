@@ -132,7 +132,7 @@ namespace investing_es
             var events = new List<IEvent>();
 
             StreamEventsSlice currentSlice;
-            var nextSliceStart = snapshot.Version + 1;
+            var nextSliceStart = snapshot.Version;
             do
             {
                 currentSlice = await _connection.ReadStreamEventsForwardAsync(
