@@ -24,6 +24,7 @@ namespace client
             var key = string.Empty;
             while (key != "X")
             {
+                AnsiConsole.Clear();
                 PrintMenuItem("Deposit", ConsoleColor.DarkRed);
                 PrintMenuItem("Withdraw", ConsoleColor.DarkCyan);
                 PrintMenuItem("Buy Stock", ConsoleColor.DarkGray);
