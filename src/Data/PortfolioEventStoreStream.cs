@@ -8,11 +8,12 @@ using API;
 using API.Events;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
+using investing_es.src.Data;
 using Newtonsoft.Json;
 
 namespace Data
 {
-    public class PortfolioEventStoreStream
+    public class PortfolioEventStoreStream : IEventStoreRepository
     {
         private const int SnapshotInterval = 5;
         private readonly IEventStoreConnection _connection;
