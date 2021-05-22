@@ -54,19 +54,19 @@ namespace Data
             IEvent result = null;
 
             var esJsonData = Encoding.UTF8.GetString(evnt.Event.Data);
-            if (evnt.Event.EventType == "DepositMade")
+            if (evnt.Event.EventType == nameof(DepositMade))
             {
                 result = JsonConvert.DeserializeObject<DepositMade>(esJsonData);
             }
-            else if (evnt.Event.EventType == "WithdrawalMade")
+            else if (evnt.Event.EventType == nameof(WithdrawalMade))
             {
                 result = JsonConvert.DeserializeObject<WithdrawalMade>(esJsonData);
             }
-            else if (evnt.Event.EventType == "SharesBought")
+            else if (evnt.Event.EventType == nameof(SharesBought))
             {
                 result = JsonConvert.DeserializeObject<SharesBought>(esJsonData);
             }
-            else if (evnt.Event.EventType == "SharesSold")
+            else if (evnt.Event.EventType == nameof(SharesSold))
             {
                 result = JsonConvert.DeserializeObject<SharesSold>(esJsonData);
             }

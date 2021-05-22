@@ -4,7 +4,7 @@ namespace API.Events
 {
     public class WithdrawalMade : IEvent
     {
-        public string EventType { get; } = "WithdrawalMade";
+        public string EventType { get; } = nameof(WithdrawalMade);
         public string User { get; }
         public int Amount { get; }
         public DateTime DateTime { get; }

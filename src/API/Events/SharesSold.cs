@@ -4,7 +4,7 @@ namespace API.Events
 {
     public class SharesSold : IEvent
     {
-        public string EventType { get; } = "SharesSold";
+        public string EventType { get; } = nameof(SharesBought);
         public string Stock { get; }
         public string User { get; }
         public int Amount { get; }
