@@ -4,11 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using API;
+using API.Events;
 using EventStore.ClientAPI;
 using EventStore.ClientAPI.SystemData;
 using Newtonsoft.Json;
 
-namespace investing_es
+namespace Data
 {
     public class PortfolioEventStoreStream
     {
@@ -183,16 +185,5 @@ namespace investing_es
             var evt = new EventData(Guid.NewGuid(), "snapshot", true, data, metadata);
             await _connection.AppendToStreamAsync(streamName, ExpectedVersion.Any, evt);
         }
-    }
-
-    public class Snapshot
-    {
-        public long Version { get; set; } = 0;
-        public PortfolioState State;
-        public Snapshot()
-        {
-            State = new PortfolioState();
-        }
-
     }
 }

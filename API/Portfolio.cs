@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using API.Events;
+using API.Models;
 
-public class Portfolio
+namespace API
+{
+    public class Portfolio
     {
         public string Username { get; }
         private readonly IList<IEvent> _events = new List<IEvent>();
@@ -45,12 +49,12 @@ public class Portfolio
         {
             _portfolioState.Money += (evnt.Amount * evnt.Price);
             var share = new ShareTicker(evnt.Amount, evnt.Price);
-            if(_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, ShareTicker>(); 
-            if(_portfolioState.Shares.ContainsKey(evnt.Stock))
+            if (_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, ShareTicker>();
+            if (_portfolioState.Shares.ContainsKey(evnt.Stock))
             {
                 _portfolioState.Shares[evnt.Stock].NumberOfShares -= evnt.Amount;
                 _portfolioState.Profit = (evnt.Price - _portfolioState.Shares[evnt.Stock].Price) * evnt.Amount;
-            } 
+            }
             else
             {
                 //do nothing
@@ -60,12 +64,12 @@ public class Portfolio
         {
             _portfolioState.Money -= (evnt.Amount * evnt.Price);
             var share = new ShareTicker(evnt.Amount, evnt.Price);
-            if(_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, ShareTicker>(); 
-            if(_portfolioState.Shares.ContainsKey(evnt.Stock))
+            if (_portfolioState.Shares == null) _portfolioState.Shares = new Dictionary<string, ShareTicker>();
+            if (_portfolioState.Shares.ContainsKey(evnt.Stock))
             {
                 _portfolioState.Shares[evnt.Stock].Price = ((_portfolioState.Shares[evnt.Stock].NumberOfShares * _portfolioState.Shares[evnt.Stock].Price) + (evnt.Amount * evnt.Price)) / (_portfolioState.Shares[evnt.Stock].NumberOfShares + evnt.Amount);
                 _portfolioState.Shares[evnt.Stock].NumberOfShares += evnt.Amount;
-            } 
+            }
             else
             {
                 _portfolioState.Shares.Add(evnt.Stock, share);
@@ -93,7 +97,7 @@ public class Portfolio
             return uncommittedEvents;
         }
 
-       public void ApplyEvent(IEvent evnt, bool isFastForward = false)
+        public void ApplyEvent(IEvent evnt, bool isFastForward = false)
         {
             switch (evnt)
             {
@@ -111,10 +115,11 @@ public class Portfolio
                     break;
             }
 
-            
-            if(isFastForward == false) 
+
+            if (isFastForward == false)
                 _uncommittedevents.Add(evnt);
-            else 
+            else
                 _events.Add(evnt);
         }
     }
+}
