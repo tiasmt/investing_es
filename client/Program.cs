@@ -99,7 +99,7 @@ namespace client
                 }
                 await portfolioRepository.Save(portfolio);
                 AnsiConsole.WriteLine();
-                AnsiConsole.WriteLine();
+                Console.ReadLine();
             }
         }
 
